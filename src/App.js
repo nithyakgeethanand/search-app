@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import spinner from './spinner.gif';
+import LoadingSpinner from './LoadingSpinner';
+import CustomerDetails from './CustomerDetails';
 
 
 function App() {
@@ -31,14 +32,15 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" data-testid="search-app">
       <div style={{
         'alignItems': "center",
         'textAlign': "center",
 
       }}>
-        <h1>Customer Data</h1>
-        <input type="search"
+        <h1 data-testid="search-heading">Customer Data</h1>
+        <input data-testid="search-input-word"
+          type="search"
           name="search-form"
           id="search-form"
           className="search-input"
@@ -47,49 +49,10 @@ function App() {
         {console.log("search word", searchWord)}
       </div>
 
-      {isLoading ? <img src={spinner} alt='spinner' />
+      {isLoading ? <LoadingSpinner isLoading={isLoading}/>
         : <div>
-          {(searchWord.length === 0 && data && data.length > 0) && data.map(x => <div style={{
-            display: "inline-flex",
-            margin: "20px",
-            width: "200px",
-            padding: "20px",
-          }}>
-            <div style={{
-              'textAlign': 'center',
-            }}>
-              <div>
-                <div style={{
-                  "backgroundColor": "#D5D3D3",
-                  'border-collapse': "collapse",
-                  "padding": "10px",
-                  "fontStyle": "20px",
-                }}>Customer Name : {x.name}</div>
-
-                <div style={{
-                  "padding": "10px",
-                  'textAlign': "center",
-                  'border': "1px solid #D5D3D3",
-                }}>{x.id}</div>
-                <div style={{
-                  "padding": "10px",
-                  'textAlign': "center",
-                  'border': "1px solid #D5D3D3",
-                }}>{x.name}</div>
-                <div style={{
-                  "padding": "10px",
-                  'textAlign': "center",
-                  'border': "1px solid #D5D3D3",
-                }}>{x.nickname}</div>
-                <div style={{
-                  "padding": "10px",
-                  'textAlign': "center",
-                  'border': "1px solid #D5D3D3",
-                }}>{x.address}</div>
-              </div>
-
-            </div>
-          </div>
+          {(searchWord.length === 0 && data && data.length > 0) && data.map(x =>
+            <CustomerDetails data={x} key={x.id} />
           )}
         </div>
       }
@@ -97,43 +60,7 @@ function App() {
       {searchWord.length > 0 && data.filter((datas) => {
         return (datas.id).includes(searchWord) || (datas.name).includes(searchWord)
           || (datas.nickname).includes(searchWord) || (datas.address[0]).includes(searchWord)
-      }).map(x => <div style={{
-        display: "inline-flex",
-        margin: "20px",
-        width: "200px",
-        padding: "20px",
-      }}>
-        <div style={{
-          'textAlign': 'center',
-        }}>
-          <div style={{
-            "backgroundColor": "#D5D3D3",
-            'border-collapse': "collapse",
-            "padding": "10px",
-            "fontStyle": "20px",
-          }}>Customer Name : {x.name}</div>
-          <div style={{
-            "padding": "10px",
-            'textAlign': "center",
-            'border': "1px solid #D5D3D3",
-          }}>{x.id}</div>
-          <div style={{
-            "padding": "10px",
-            'textAlign': "center",
-            'border': "1px solid #D5D3D3",
-          }}>{x.name}</div>
-          <div style={{
-            "padding": "10px",
-            'textAlign': "center",
-            'border': "1px solid #D5D3D3",
-          }}>{x.nickname}</div>
-          <div style={{
-            "padding": "10px",
-            'textAlign': "center",
-            'border': "1px solid #D5D3D3",
-          }}>{x.address}</div>
-        </div>
-      </div>)}
+      }).map(x => <CustomerDetails data={x} key={x.id} />)}
     </div>
   );
 }
