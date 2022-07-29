@@ -14,7 +14,7 @@ When there is a search word on the search bar will display the corresponding the
 Home Page
 ![Screenshot](screenshots/HomePage.png)
 
-Searched Result
+Search Result
 ![Screenshot](screenshots/SearchedResult.png)
 
 
